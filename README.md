@@ -20,11 +20,16 @@ O que veremos na aula de hoje?
 * [Banco de Dados Relacional(SQL)](#tema3)
 * [Banco de Dados Não relacional(**NoSQL**)](#tema3)
 
+
+### Retrospectiva da semana 
+
+[Quadro final](https://easyretro.io/publicboard/6JYlgjPPqiNIWLxpw3nWzSSIPuh2/28e59fe6-1860-4c6a-8239-01593bc2a7c5)
+
 ## Conteúdo
 ### Case Clínica Jansen's Anatomy 
 
 <h1 align="center">
-  <img src="assets/greys_anatomy.png" alt="imagem dos atores da série Greys Anatomy" width="500">
+  <img src="assets/greys_anatomy.jpg" alt="imagem dos atores da série Greys Anatomy" width="500">
 </h1>
 
 A clínica Jansen's Health costuma agendar as consultas e dados de pacientes no papel e caneta. Com o passar do tempo e com a clínica crescendo está ficando insustentável manter o que temos hoje. Toda vez que precisamos de qualquer informação do paciente ou mesmo das consultas do médico demoramos muito para achar o que precisamos. Além disso, temos dados super importantes em anotações, como prontuário e todo um histórico de pacientes. Se perdermos uma folha, podemos perder algo muito importante e sensível. Com todo esse cenário caótico, a clínica pediu nossa ajuda para organizar esses dados para melhorar o dia a dia deles e dos pacientes.

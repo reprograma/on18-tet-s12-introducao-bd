@@ -20,6 +20,11 @@ O que veremos na aula de hoje?
 * [Banco de Dados Relacional(SQL)](#tema3)
 * [Banco de Dados Não relacional(**NoSQL**)](#tema3)
 
+
+### Retrospectiva da semana 
+
+[Quadro final](https://easyretro.io/publicboard/6JYlgjPPqiNIWLxpw3nWzSSIPuh2/28e59fe6-1860-4c6a-8239-01593bc2a7c5)
+
 ## Conteúdo
 ### Case Clínica Jansen's Anatomy 
 

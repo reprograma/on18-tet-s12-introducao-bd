@@ -47,7 +47,39 @@ const buscarPaciente = async (req, res) => {
 }
 
 
+const buscarPacientePorId = async (req, res) => {
+    try {
+        const paciente = await PacienteSchema.findById(req.params.id)
+        res.status(200).json(paciente);
+
+    } catch (error) {
+        res.status(500).json({
+            mensagem: error.message
+        })
+    }
+}
+
+
+const deletarPaciente = async(req, res) =>{
+    try{
+        const paciente = await PacienteSchema.findById(req.params.id)
+
+        await paciente.delete();
+
+        res.status(200).json({
+            mensagem: `Paciente removida do sistema.`
+        })
+    }catch(error){
+        res.status(400).json({
+            mensagem: error.message
+        })
+    }
+}
+
+
 module.exports = {
     criarPaciente,
-    buscarPaciente
+    buscarPaciente,
+    buscarPacientePorId, 
+    deletarPaciente
 }

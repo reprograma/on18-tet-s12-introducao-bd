@@ -27,6 +27,8 @@ const pacienteSchema = new mongoose.Schema({
     }
 }, { timestamps: true })
 
+const date = new Date().toLocaleString();
+console.log(date)
 module.exports = mongoose.model("paciente", pacienteSchema)
 
 

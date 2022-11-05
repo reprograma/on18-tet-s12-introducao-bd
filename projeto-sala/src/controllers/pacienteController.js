@@ -10,6 +10,8 @@ const criarPaciente = async (request, response) => {
     if (verificarItens.validarPlanoDeSaude(request.body)) {
         return response.json({ message: verificarItens.validarPlanoDeSaude(request.body) })
     }
+    const pacientes = await PacienteSchema.find({ plano_saude_numero: request.body.plano_saude_numero })
+    if (pacientes) return response.status(400).send({ message: `Não é possível cadastrar esse número de plano novamente` })
     try {
         const paciente = new PacienteSchema({
             nome: nome.toUpperCase(),
@@ -43,6 +45,8 @@ const buscarPaciente = async (request, response) => {
         })
     }
 }
+
+
 
 module.exports = {
     criarPaciente,

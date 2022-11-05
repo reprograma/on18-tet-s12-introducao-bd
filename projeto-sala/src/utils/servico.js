@@ -11,7 +11,17 @@ function verificarItensObrigatorios(body) {
     return false
 }
 
+function formataData(data) {
+    let dataFormata = data.split("T")[0]
+    return dataFormata
+}
+
 function validarPlanoDeSaude(body) {
+    if (body.plano_saude) {
+        if (!body.plano_saude_numero) {
+            return `O campo plano_saude_numero é obrigatório`
+        }
+    }
     if (typeof body.plano_saude_numero !== "number") {
         return `O campo plano_saude_numero deve ser um número. Preencha o número da sua carteira do plano.`
     }
@@ -25,5 +35,6 @@ function validarNumeroDoPlanoDeSaude() {
 module.exports = {
     verificarItensObrigatorios,
     validarPlanoDeSaude,
-    validarNumeroDoPlanoDeSaude
+    validarNumeroDoPlanoDeSaude,
+    formataData
 }

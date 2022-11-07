@@ -6,20 +6,14 @@ const verificarItens = require('../utils/servico')
 const buscarPacienteId = async (request, response) => {
     const { id } = request.params
     try {
-        if (id.length > 1) {
-            caracter = `Caracteres`
-        } else {
-            caracter = `Caracter`
-        }
-
         if (id.length > 24) {
             return response.status(404).json({
-                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. ${caracter} a mais: ${id.length - 24}.`
+                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. Caracter a mais: ${id.length - 24}.`
             })
         }
         if (id.length < 24) {
             return response.status(404).json({
-                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. ${caracter} a menos: ${24 - id.length}.`
+                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. Caracter a menos: ${24 - id.length}.`
             })
         }
         const paciente = await PacienteSchema.find({ id })
@@ -86,20 +80,14 @@ const criarPaciente = async (request, response) => {
 const deletarPaciente = async (request, response) => {
     const { id } = request.params
     try {
-        if (id.length > 1) {
-            caracter = `Caracteres`
-        } else {
-            caracter = `Caracter`
-        }
-
         if (id.length > 24) {
             return response.status(404).json({
-                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. ${caracter} a mais: ${id.length - 24}.`
+                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. Caracter a mais: ${id.length - 24}.`
             })
         }
         if (id.length < 24) {
             return response.status(404).json({
-                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. ${caracter} a menos: ${24 - id.length}.`
+                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. Caracter a menos: ${24 - id.length}.`
             })
         }
         const pacienteEncontrado = await PacienteSchema.deleteOne({ id })
@@ -119,20 +107,14 @@ const atualizarPaciente = async (request, response) => {
     const { id } = request.params
     const { nome, telefone, endereco, plano_saude, plano_saude_numero } = request.body;
     try {
-        if (id.length > 1) {
-            caracter = `Caracteres`
-        } else {
-            caracter = `Caracter`
-        }
-
         if (id.length > 24) {
             return response.status(404).json({
-                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. ${caracter} a mais: ${id.length - 24}.`
+                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. Caracter a mais: ${id.length - 24}.`
             })
         }
         if (id.length < 24) {
             return response.status(404).json({
-                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. ${caracter} a menos: ${24 - id.length}.`
+                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. Caracter a menos: ${24 - id.length}.`
             })
         }
         const pacienteEncontrado = await PacienteSchema.updateOne({

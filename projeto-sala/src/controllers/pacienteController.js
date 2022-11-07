@@ -2,6 +2,55 @@ const mongoose = require('mongoose');
 const PacienteSchema = require('../models/PacienteSchema');
 const verificarItens = require('../utils/servico')
 
+
+const buscarPacienteId = async (request, response) => {
+    const { id } = request.params
+    try {
+        if (id.length > 1) {
+            caracter = `Caracteres`
+        } else {
+            caracter = `Caracter`
+        }
+
+        if (id.length > 24) {
+            return response.status(404).json({
+                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. ${caracter} a mais: ${id.length - 24}.`
+            })
+        }
+        if (id.length < 24) {
+            return response.status(404).json({
+                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. ${caracter} a menos: ${24 - id.length}.`
+            })
+        }
+        const paciente = await PacienteSchema.find({ id })
+        if (paciente.length == 0) {
+            return response.status(200).json({ message: `O paciente não foi encontrado.` })
+        }
+        response.status(200).json({ Prezades: `Segue o paciente para este id [${id}]:`, paciente })
+    } catch (error) {
+        response.status(500).json({
+            message: error.message
+        })
+    }
+}
+
+const buscarTodosPacientes = async (request, response) => {
+    try {
+        const paciente = await PacienteSchema.find()
+        if (paciente.length > 1) {
+            return response.status(200).json({ message: `Encontramos ${paciente.length} pacientes.`, paciente })
+        } else if (paciente.length == 1) {
+            return response.status(200).json({ message: `Encontramos ${paciente.length} paciente.`, paciente })
+        } else {
+            return response.status(200).json({ message: `Não encontramos nenhum paciente até o momento.` })
+        }
+    } catch (error) {
+        response.status(500).json({
+            message: error.message
+        })
+    }
+}
+
 const criarPaciente = async (request, response) => {
     const { nome, telefone, endereco, plano_saude, plano_saude_numero } = request.body;
     if (verificarItens.verificarItensObrigatorios(request.body)) {
@@ -10,8 +59,10 @@ const criarPaciente = async (request, response) => {
     if (verificarItens.validarPlanoDeSaude(request.body)) {
         return response.json({ message: verificarItens.validarPlanoDeSaude(request.body) })
     }
-    const pacientes = await PacienteSchema.find({ plano_saude_numero: request.body.plano_saude_numero })
-    if (pacientes) return response.status(400).send({ message: `Não é possível cadastrar esse número de plano novamente` })
+    const buscaNumeroPlano = await PacienteSchema.find({ plano_saude_numero })
+    if (buscaNumeroPlano.length !== 0) {
+        return response.status(400).json({ message: `Não é possível cadastrar esse número de plano novamente.` });
+    }
     try {
         const paciente = new PacienteSchema({
             nome: nome.toUpperCase(),
@@ -32,13 +83,68 @@ const criarPaciente = async (request, response) => {
     }
 }
 
-const buscarPaciente = async (request, response) => {
-    const { nome } = request.query
-    let query = {};
-    if (nome) query.nome = new RegExp(nome, 'i');
+const deletarPaciente = async (request, response) => {
+    const { id } = request.params
     try {
-        const pacientes = await PacienteSchema.find(query)
-        response.status(200).json(pacientes)
+        if (id.length > 1) {
+            caracter = `Caracteres`
+        } else {
+            caracter = `Caracter`
+        }
+
+        if (id.length > 24) {
+            return response.status(404).json({
+                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. ${caracter} a mais: ${id.length - 24}.`
+            })
+        }
+        if (id.length < 24) {
+            return response.status(404).json({
+                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. ${caracter} a menos: ${24 - id.length}.`
+            })
+        }
+        const pacienteEncontrado = await PacienteSchema.deleteOne({ id })
+        if (pacienteEncontrado.deletedCount === 1) {
+            return response.status(200).send({ message: `O paciente foi deletado com sucesso!` })
+        } else {
+            return response.status(404).send({ message: "O paciente não foi encontrado." })
+        }
+    } catch (error) {
+        response.status(500).json({
+            message: error.message
+        })
+    }
+}
+
+const atualizarPaciente = async (request, response) => {
+    const { id } = request.params
+    const { nome, telefone, endereco, plano_saude, plano_saude_numero } = request.body;
+    try {
+        if (id.length > 1) {
+            caracter = `Caracteres`
+        } else {
+            caracter = `Caracter`
+        }
+
+        if (id.length > 24) {
+            return response.status(404).json({
+                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. ${caracter} a mais: ${id.length - 24}.`
+            })
+        }
+        if (id.length < 24) {
+            return response.status(404).json({
+                Alerta: `Por favor digite o id do paciente corretamente, o mesmo possui 24 caracteres. ${caracter} a menos: ${24 - id.length}.`
+            })
+        }
+        const pacienteEncontrado = await PacienteSchema.updateOne({
+            nome, telefone, endereco, plano_saude, plano_saude_numero
+        })
+        const pacienteAtualizado = await PacienteSchema.find({ id })
+        if (pacienteAtualizado.length == 0) {
+            return response.status(404).json({
+                message: `O paciente não foi encontrado.`
+            })
+        }
+        response.json({ pacienteAtualizado })
     } catch (error) {
         response.status(500).json({
             message: error.message
@@ -49,8 +155,11 @@ const buscarPaciente = async (request, response) => {
 
 
 module.exports = {
+    buscarPacienteId,
+    buscarTodosPacientes,
     criarPaciente,
-    buscarPaciente
+    deletarPaciente,
+    atualizarPaciente
 }
 
 //retornar msg de ser obrigatório para nome,endereço e telefone ok

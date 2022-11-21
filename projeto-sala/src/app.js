@@ -1,4 +1,4 @@
-require("dotenv").config()
+require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
@@ -9,10 +9,6 @@ const pacienteRoutes = require("./routes/pacienteRoutes");
 
 app.use(cors());
 app.use(express.json());
-
-app.get("/", (req, res)=>{
-    res.status(200).send("GET OK")
-});
 
 app.use("/paciente", pacienteRoutes);
 

@@ -1,26 +1,35 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const pacienteSchema = new mongoose.Schema({
+const pacienteSchema = new mongoose.Schema(
+  {
+    id: {
+      type: mongoose.Types.ObjectId,
+      default: mongoose.Types.ObjectId,
+    },
     nome: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     telefone: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     endereco: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     plano_saude: {
-        type: String,
-        required: true
+      type: String,
+      required: false,
     },
     plano_saude_numero: {
-        type: Number, 
-        required: false
-    }
-}, { timestamps : true });
+      type: Number,
+      required: false,
+    },
+  },
+  { timestamps: true }
+);
 
+const date = new Date().toLocaleString();
+console.log(date);
 module.exports = mongoose.model("paciente", pacienteSchema);

@@ -172,7 +172,10 @@ const atualizarPaciente = async (request, response) => {
         message: `O paciente não foi encontrado.`,
       });
     }
-    response.json({ pacienteAtualizado });
+    response.status(200).json({ 
+      message: "Paciente atualizado com sucesso!",
+      pacienteAtualizado 
+    });
   } catch (error) {
     response.status(500).json({
       message: error.message,

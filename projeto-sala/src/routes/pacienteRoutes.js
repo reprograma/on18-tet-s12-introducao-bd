@@ -6,8 +6,8 @@ const router = require("express").Router();
 router.get("/buscarpaciente/:id", controller.buscarPacienteId)
 router.get("/buscartodos", controller.buscarTodosPacientes)
 router.post("/criar", controller.criarPaciente)
-router.delete("/:id", controller.deletarPaciente)
-router.patch("/:id", controller.atualizarPaciente)
+router.delete("/deletar/:id", controller.deletarPaciente)
+router.patch("/atualizar/:id", controller.atualizarPaciente)
 
 //exportar para ser usado no app.js
 module.exports = router;
